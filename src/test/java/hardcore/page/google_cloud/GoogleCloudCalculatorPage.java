@@ -15,46 +15,46 @@ public class GoogleCloudCalculatorPage extends AbstractPage {
     private static final String HOMEPAGE_URL = "https://cloud.google.com/products/calculator";
 
     @FindBy(xpath = "//devsite-iframe/iframe")
-    private WebElement outerCalculatorFrame;
+    private WebElement frameOuterCalculator;
 
     @FindBy(xpath = "//iframe[@id='myFrame']")
-    private WebElement innerCalculatorFrame;
+    private WebElement frameInnerCalculator;
 
     @FindBy(xpath = "//*[contains(text(), 'Compute Engine')]//ancestor::md-tab-item")
-    private WebElement computeEngineSection;
+    private WebElement sectionComputeEngine;
 
     @FindBy(xpath = "//input[contains(@ng-model,'computeServer.quantity')]")
-    private WebElement numberOfInstancesInput;
+    private WebElement inputNumberOfInstances;
 
     @FindBy(xpath = "//*[contains(@ng-model,'computeServer.os')]")
-    private WebElement operatingSystemSelector;
+    private WebElement selectorOperatingSystem;
 
     @FindBy(xpath = "//*[contains(@ng-model,'computeServer.class')]")
-    private WebElement machineClassSelector;
+    private WebElement selectorMachineClass;
 
     @FindBy(xpath = "//*[contains(@ng-model,'computeServer.series')]")
-    private WebElement seriesSelector;
+    private WebElement selectorSeries;
 
     @FindBy(xpath = "//*[contains(@ng-model,'computeServer.instance')]")
-    private WebElement machineTypeSelector;
+    private WebElement selectorMachineType;
 
     @FindBy(xpath = "//*[contains(@ng-model,'computeServer.addGPUs')]")
     private WebElement checkboxAddGPUs;
 
     @FindBy(xpath = "//*[contains(@ng-model,'computeServer.gpuType')]")
-    private WebElement gpuTypeSelector;
+    private WebElement selectorGpuType;
 
     @FindBy(xpath = "//*[contains(@ng-model,'computeServer.gpuCount')]")
-    private WebElement gpuNumberSelector;
+    private WebElement selectorGpuNumber;
 
     @FindBy(xpath = "//*[contains(@ng-model,'computeServer.ssd')]")
-    private WebElement localSSDSelector;
+    private WebElement selectorLocalSSD;
 
     @FindBy(xpath = "//*[contains(@ng-model,'computeServer.location')]")
-    private WebElement datacenterLocationSelector;
+    private WebElement selectorDatacenterLocation;
 
     @FindBy(xpath = "//*[contains(@ng-model,'computeServer.cud')]")
-    private WebElement committedUsageSelector;
+    private WebElement selectorCommittedUsage;
 
     @FindBy(xpath = "//button[contains(@ng-click, 'addComputeServer')]")
     private WebElement buttonAddToEstimate;
@@ -68,43 +68,38 @@ public class GoogleCloudCalculatorPage extends AbstractPage {
         return this;
     }
 
-    /*@Override
-    protected AbstractPage openPage() {
-        return null;
-    }*/
-
     public GoogleCloudCalculatorPage selectComputeEngineSection() {
-        driver.switchTo().frame(outerCalculatorFrame);
-        driver.switchTo().frame(innerCalculatorFrame);
-        computeEngineSection.click();
+        driver.switchTo().frame(frameOuterCalculator);
+        driver.switchTo().frame(frameInnerCalculator);
+        sectionComputeEngine.click();
         return this;
     }
 
     public GoogleCloudCalculatorPage inputNumberOfInstances(String number) {
         new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT_SECONDS))
-                .until(ExpectedConditions.elementToBeClickable(numberOfInstancesInput));
-        numberOfInstancesInput.click();
-        numberOfInstancesInput.sendKeys(number);
+                .until(ExpectedConditions.elementToBeClickable(inputNumberOfInstances));
+        inputNumberOfInstances.click();
+        inputNumberOfInstances.sendKeys(number);
         return this;
     }
 
     public GoogleCloudCalculatorPage selectOperatingSystem(String operatingSystem) {
-        selectOption(operatingSystemSelector, operatingSystem);
+        selectOption(selectorOperatingSystem, operatingSystem);
         return this;
     }
 
     public GoogleCloudCalculatorPage selectMachineClass(String machineClass) {
-        selectOption(machineClassSelector, machineClass);
+        selectOption(selectorMachineClass, machineClass);
         return this;
     }
 
     public GoogleCloudCalculatorPage selectSeries(String series) {
-        selectOption(seriesSelector, series);
+        selectOption(selectorSeries, series);
         return this;
     }
 
     public GoogleCloudCalculatorPage selectMachineType(String machineType) {
-        selectOption(machineTypeSelector, machineType);
+        selectOption(selectorMachineType, machineType);
         return this;
     }
 
@@ -114,27 +109,27 @@ public class GoogleCloudCalculatorPage extends AbstractPage {
     }
 
     public GoogleCloudCalculatorPage selectTypeGPU(String type) {
-        selectOption(gpuTypeSelector, type);
+        selectOption(selectorGpuType, type);
         return this;
     }
 
     public GoogleCloudCalculatorPage selectNumberGPU(String number) {
-        selectOption(gpuNumberSelector, number);
+        selectOption(selectorGpuNumber, number);
         return this;
     }
 
     public GoogleCloudCalculatorPage selectLocalSSD(String localSSD) {
-        selectOption(localSSDSelector, localSSD);
+        selectOption(selectorLocalSSD, localSSD);
         return this;
     }
 
     public GoogleCloudCalculatorPage selectDatacenterLocation(String location) {
-        selectOption(datacenterLocationSelector, location);
+        selectOption(selectorDatacenterLocation, location);
         return this;
     }
 
     public GoogleCloudCalculatorPage selectCommittedUsage(String committedUsage) {
-        selectOption(committedUsageSelector, committedUsage);
+        selectOption(selectorCommittedUsage, committedUsage);
         return this;
     }
 
@@ -152,5 +147,4 @@ public class GoogleCloudCalculatorPage extends AbstractPage {
                 .until(ExpectedConditions.elementToBeClickable(selectedOption));
         driver.findElement(selectedOption).click();
     }
-
 }

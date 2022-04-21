@@ -22,14 +22,12 @@ public class YopmailGeneratedPage extends AbstractPage {
         return null;
     }
 
-    public String getGeneratedAddress(){
-        //System.out.println(generatedAddress.getText());
+    public String getGeneratedAddress() {
         return generatedAddress.getText();
     }
 
-    public YopmailInboxPage logInToGeneratedMail(){
+    public YopmailInboxPage logInToGeneratedMail() {
         buttonCheckInbox.click();
         return new YopmailInboxPage(driver);
     }
-
 }

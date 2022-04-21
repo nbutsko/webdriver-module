@@ -11,25 +11,19 @@ import java.time.Duration;
 
 public class GoogleCloudEstimatePage extends AbstractPage {
 
-    @FindBy(xpath = "//md-list-item/*[contains(text(),'Region')]")
-    private WebElement region;
+    @FindBy(xpath = "//devsite-iframe/iframe")
+    private WebElement frameOuterCalculator;
 
-    @FindBy(xpath = "//md-list-item/*[contains(text(),'Commitment term')]")
-    private WebElement commitmentTerm;
-
-    @FindBy(xpath = "//md-list-item/*[contains(text(),'VM class')]")
-    private WebElement vmClass;
-
-    @FindBy(xpath = "//md-list-item/*[contains(text(),' Instance type')]")
-    private  WebElement instanceType;
-
-    @FindBy(xpath = "//md-list-item/*[contains(text(),' Local SSD')]")
-    private WebElement localSSD;
+    @FindBy(xpath = "//iframe[@id='myFrame']")
+    private WebElement frameInnerCalculator;
 
     @FindBy(xpath = "//*[contains(text(),' Total Estimated Cost')]")
     private WebElement totalEstimatedCost;
 
-    @FindBy(xpath = "//input[contains(@ng-model,'user.email')]")
+    @FindBy(xpath = "//button[@aria-label='Email Estimate']")
+    private WebElement buttonEmailEstimate;
+
+    @FindBy(xpath = "//md-input-container//input[contains(@ng-model,'user.email')]")
     private WebElement inputEmail;
 
     @FindBy(xpath = "//button[@aria-label='Send Email']")
@@ -44,35 +38,24 @@ public class GoogleCloudEstimatePage extends AbstractPage {
         return null;
     }
 
-    public String getRegionOnEstimate(){
-        return region.getText();
-    }
-
-    public String getCommitmentTermOnEstimate(){
-        return commitmentTerm.getText();
-    }
-
-    public String getVMClassOnEstimate(){
-        return vmClass.getText();
-    }
-
-    public String getInstanceTypeOnEstimate(){
-        return instanceType.getText();
-    }
-
-    public String getLocalSSDOnEstimate(){
-        return localSSD.getText();
-    }
-
-    public double getAmountOfRentPerMonthFromGoogleCloudPage(){
+    public double getAmountOfRentPerMonthFromGoogleCloudPage() {
         String totalCostLine = totalEstimatedCost.getText();
         int startIndex = totalCostLine.indexOf("USD");
         int endIndex = totalCostLine.indexOf("per");
-        String amountOfRent = totalCostLine.substring(startIndex+3,endIndex).trim().replaceAll(",","");
+        String amountOfRent = totalCostLine.substring(startIndex + 3, endIndex).trim().replaceAll(",", "");
         return Double.parseDouble(amountOfRent);
     }
 
-    public GoogleCloudEstimatePage sendEmailWithEstimate (String emailAddress){
+    public GoogleCloudEstimatePage clickButtonEmailEstimate() {
+        driver.switchTo().frame(frameOuterCalculator);
+        driver.switchTo().frame(frameInnerCalculator);
+        new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT_SECONDS))
+                .until(ExpectedConditions.elementToBeClickable(buttonEmailEstimate));
+        buttonEmailEstimate.click();
+        return this;
+    }
+
+    public GoogleCloudEstimatePage clickButtonSendEmailWithEstimate(String emailAddress) {
         new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT_SECONDS))
                 .until(ExpectedConditions.elementToBeClickable(inputEmail));
         inputEmail.sendKeys(emailAddress);
@@ -81,6 +64,4 @@ public class GoogleCloudEstimatePage extends AbstractPage {
         buttonSendEmail.click();
         return this;
     }
-
-
 }

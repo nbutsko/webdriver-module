@@ -5,10 +5,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class YopmailInboxPage extends AbstractPage{
+public class YopmailInboxPage extends AbstractPage {
 
-    @FindBy(xpath = "//*[contains(text(), 'Google Cloud Price Estimate')]/parent::button")
-    private WebElement buttonReceivedEmailFromGoogleCloud;
+    @FindBy(xpath = "//iframe[@id='ifmail']")
+    private WebElement frameMail;
 
     @FindBy(xpath = "//h3[contains(text(), 'USD')]")
     private WebElement totalEstimatedCost;
@@ -22,19 +22,16 @@ public class YopmailInboxPage extends AbstractPage{
         return null;
     }
 
-    public YopmailInboxPage refreshPage(){
+    public YopmailInboxPage refreshPage() {
         driver.navigate().refresh();
         return this;
     }
 
-    public double getAmountOfRentPerMonthFromGoogleCloudPage(){
-        buttonReceivedEmailFromGoogleCloud.click();
+    public double getAmountOfRentPerMonthFromMailPage() {
+        driver.switchTo().frame(frameMail);
         String totalCostFromEmail = totalEstimatedCost.getText();
         int startIndex = totalCostFromEmail.indexOf("USD");
-        String amountOfRent = totalCostFromEmail.substring(startIndex+3).trim().replaceAll(",","");
-        System.out.println("!!!!!!!!!!!"+amountOfRent);
+        String amountOfRent = totalCostFromEmail.substring(startIndex + 3).trim().replaceAll(",", "");
         return Double.parseDouble(amountOfRent);
     }
-
-
 }

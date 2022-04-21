@@ -32,5 +32,4 @@ public class GoogleCloudSearchResultPage extends AbstractPage {
         calculatorPageLink.click();
         return new GoogleCloudCalculatorPage(driver);
     }
-
 }
