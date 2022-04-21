@@ -75,7 +75,16 @@ public class GoogleCloudCalculatorPage extends AbstractPage {
         return this;
     }
 
-    public GoogleCloudCalculatorPage inputNumberOfInstances(String number) {
+    public GoogleCloudCalculatorPage fillFormInstances(String numberOfInstances, String operatingSystem, String machineClass, String series, String machineType){
+        inputNumberOfInstances(numberOfInstances);
+        selectOperatingSystem(operatingSystem);
+        selectMachineClass(machineClass);
+        selectSeries(series);
+        selectMachineType(machineType);
+        return this;
+    }
+
+    private GoogleCloudCalculatorPage inputNumberOfInstances(String number) {
         new WebDriverWait(driver, Duration.ofSeconds(WAIT_TIMEOUT_SECONDS))
                 .until(ExpectedConditions.elementToBeClickable(inputNumberOfInstances));
         inputNumberOfInstances.click();
@@ -83,22 +92,22 @@ public class GoogleCloudCalculatorPage extends AbstractPage {
         return this;
     }
 
-    public GoogleCloudCalculatorPage selectOperatingSystem(String operatingSystem) {
+    private GoogleCloudCalculatorPage selectOperatingSystem(String operatingSystem) {
         selectOption(selectorOperatingSystem, operatingSystem);
         return this;
     }
 
-    public GoogleCloudCalculatorPage selectMachineClass(String machineClass) {
+    private GoogleCloudCalculatorPage selectMachineClass(String machineClass) {
         selectOption(selectorMachineClass, machineClass);
         return this;
     }
 
-    public GoogleCloudCalculatorPage selectSeries(String series) {
+    private GoogleCloudCalculatorPage selectSeries(String series) {
         selectOption(selectorSeries, series);
         return this;
     }
 
-    public GoogleCloudCalculatorPage selectMachineType(String machineType) {
+    private GoogleCloudCalculatorPage selectMachineType(String machineType) {
         selectOption(selectorMachineType, machineType);
         return this;
     }
@@ -108,12 +117,18 @@ public class GoogleCloudCalculatorPage extends AbstractPage {
         return this;
     }
 
-    public GoogleCloudCalculatorPage selectTypeGPU(String type) {
+    public GoogleCloudCalculatorPage fillFormGPU(String type, String number){
+        selectTypeGPU(type);
+        selectNumberGPU(number);
+        return this;
+    }
+
+    private GoogleCloudCalculatorPage selectTypeGPU(String type) {
         selectOption(selectorGpuType, type);
         return this;
     }
 
-    public GoogleCloudCalculatorPage selectNumberGPU(String number) {
+    private GoogleCloudCalculatorPage selectNumberGPU(String number) {
         selectOption(selectorGpuNumber, number);
         return this;
     }
